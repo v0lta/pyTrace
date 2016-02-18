@@ -3,11 +3,11 @@ Created on Feb 12, 2016
 
 @author: moritz
 '''
-import src.camera.Camera as Camera
-import src.math.OrthonormalBasis as OrthonormalBasis
-import src.sampling.ImgSample as ImgSample
-import src.math.Ray as Ray
-import math.tan
+from src.camera.Camera import Camera
+from src.math.OrthonormalBasis import OrthonormalBasis
+from src.sampling.ImgSample import ImgSample
+from src.math.Ray import Ray
+import math
 
 class PerspectiveCamera(Camera):
     '''

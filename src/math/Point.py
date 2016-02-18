@@ -3,6 +3,7 @@ Created on Feb 12, 2016
 
 @author: moritz
 '''
+import numpy as np
 
 class Point(object):
     '''
@@ -23,7 +24,9 @@ class Point(object):
             self.y = 0.0
         if y == None:
             self.z = 0.0
-
+                
+    def getArray(self):
+        return np.array([self.x,self.y,self.z])
 
         
     

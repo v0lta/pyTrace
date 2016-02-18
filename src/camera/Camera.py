@@ -9,7 +9,7 @@ class Camera(object):
     abstract camera class which outline the functions each camera has to implement. 
     '''
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
