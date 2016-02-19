@@ -27,8 +27,8 @@ class SimpleCamera(object):
         Generate Rays from the center of the corresponding pixel according to page
         66 of the book.
         '''
-        xw = self.s *(sample.x - self.hres/2 + 0.5)
-        yw = self.s *(sample.y - self.vres/2 + 0.5)
+        xw = self.s *(sample.x - self.hres/2.0 + 0.5)
+        yw = self.s *(sample.y - self.vres/2.0 + 0.5)
         
         origin = Point(self.origin.x + xw, self.origin.y + yw, self.origin.z )
         direction = self.lookat

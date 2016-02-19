@@ -4,7 +4,6 @@ Created on Feb 15, 2016
 @author: moritz
 '''
 from src.shape.Shape import Shape
-from src.math.Transformation import Transformation
 import numpy as np
 
 class Sphere(Shape):
@@ -21,10 +20,12 @@ class Sphere(Shape):
         '''
         rayInv = self.transformation.transformInverse(ray)
 
-        a = np.dot(rayInv.direction, rayInv.direction)
-        b = 2.0 * np.dot(rayInv.direction, rayInv.origin)
-        c = np.dot(rayInv.origin, rayInv.origin) - 1.0
-        
+        ro = rayInv.origin[0:3]
+        rd = rayInv.direction[0:3]
+
+        a = np.dot(rd.transpose(), rd) 
+        b = 2.0 * np.dot(ro.transpose(), rd)
+        c = np.dot(ro.transpose(), ro) - 1.0
  
         #the discriminant decides what values the roots are going to have.
         d = b*b - 4.0*a*c
@@ -41,6 +42,7 @@ class Sphere(Shape):
         t0 = q/a;
         t1 = c/q;
         
+        #only report a hit if the intersection has a positive t.
         return (t0 >= 0) or (t1 >= 0)
             
             

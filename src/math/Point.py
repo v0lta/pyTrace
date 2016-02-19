@@ -25,8 +25,13 @@ class Point(object):
         if y == None:
             self.z = 0.0
                 
-    def getArray(self):
-        return np.array([self.x,self.y,self.z])
-
+    def getArray4(self):
+        vec = np.array([self.x, self.y, self.z, 1.0])
+        colVec = vec.reshape(4,1)
+        return colVec
+    def getArray3(self):
+        vec = np.array([self.x, self.y, self.z])
+        colVec = vec.reshape(3,1)
+        return colVec
         
     

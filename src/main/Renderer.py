@@ -11,16 +11,17 @@ from src.camera.PerspectiveCamera import PerspectiveCamera
 from src.math.Transformation import Transformation
 from src.math.Point import Point
 from src.shape.Sphere import Sphere
+from src.shape.SimpleSphere import SimpleSphere
 from src.sampling.ImgSample import ImgSample
 
 
 class Renderer:
     def __init__(self):
-        self.width       = 320
-        self.height      = 320
+        self.width       = 100
+        self.height      = 100
         self.sensitivity = 1.0
         self.gamma       = 2.2
-        self.gui         = False
+
 
     def main(self):    
         # parse command line arguments...(comes later)
@@ -36,24 +37,29 @@ class Renderer:
             raise NameError('Sensitivity must be positive.')
         
         # initialize the camera.
-        camera = SimpleCamera(self.width, self.height, Point(0.0, 0.0, 0.0),
-                                   Point(0.0, 0.0, 1.0),0.05)
+        #  xResolution, yResolution, origin, lookat,s
+        camera = SimpleCamera(self.width, self.height, Point(0.0, 0.0, -1.0),
+                                   Point(0.0, 0.0, 1.0),0.1)
         
         #camera = PerspectiveCamera(self.width, self.height, Point(0.0, 0.0, 0.0),
         #                           Point(0.0, 0.0, 1.0), Point(0.0, 1.0, 0.0),
         #                           np.array([0.0, 1.0, 0.0])  )
         
         # initialize the scene
-        t1 = Transformation()
+        #t1 = Transformation(); t1.scale(1, 1, 1)
+        t2 = Transformation(); t2.translation(0.0,-1.0, 0.0)
         shapes = [];
-        sphere1 = Sphere(t1); shapes.append(sphere1)
+        #sphere1 = Sphere(t1); shapes.append(sphere1)
+        sphere2 = Sphere(t2); shapes.append(sphere2)
+        #sphere3 = SimpleSphere(Point(0.0,0.0,0.0),0.5); shapes.append(sphere3)
+        sphere4 = SimpleSphere(Point(0.0,1.0,0.0),1.0); shapes.append(sphere4)
         
         #create the image matrix
         img = np.zeros((self.width,self.height,3))
         
-        for x in range(0,self.width-1):
-            for y in range(0,self.height-1):
-                sample = ImgSample(x,y,)
+        for x in range(0,self.width):
+            for y in range(0,self.height):
+                sample = ImgSample(x,y)
                 currentRay = camera.generateRay(sample)
                 
                 #Using exhaustive ray Tracing
