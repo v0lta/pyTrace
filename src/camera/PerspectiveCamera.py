@@ -5,17 +5,21 @@ Created on Feb 12, 2016
 '''
 from src.camera import Camera
 from src.math import OrthonormalBasis
+from src.math.Point import Point
 from src.sampling import ImgSample
 from src.math import Ray
-import math
+import numpy as np
 
 class PerspectiveCamera(Camera):
     '''
     A class implementing a camera with perspective transformation.
+    As described in chapter 9 of the ray tracing-book.
     '''
 
-    def __init__(self, xResolution, yResolution, origin, lookAt, up, fov):
+    def __init__(self, xResolution, yResolution, origin, lookAt, up, s, d):
         '''
+        Construct a camera which a ray originating from the same point but
+        different directions.
         set the resolution in x and y, as well as the origin the up and look at 
         vector. Additionally the field of view has to be defined.
         '''
@@ -23,23 +27,24 @@ class PerspectiveCamera(Camera):
             raise NameError('The horizontal resolution must be larger or equal to one.')
         if (yResolution < 1):
             raise NameError('The vertical resolution must be larger or equal to one.')
-        if (fov <= 0):
-            raise NameError(' The field of view must be greater then zero degrees.')
-        if (fov >= 180):
-            raise NameError(' The field of view must be smaller then 180 degrees.')
+        if (s <= 0):
+            raise NameError('pixel sive s must be positive')
+        if (d <= 0):
+            raise NameError('view plane distance d must be positive')
         
-        self.origin = origin;
         self.basis = OrthonormalBasis(lookAt, up);
-
-        self.invxResolution = 1.0 / xResolution;
-        self.invyResolution = 1.0 / yResolution;
-        self.width = 2.0 * math.tan(0.5 * fov);
-        self.height = ( yResolution * self.width) * self.invxResolution;
+        self.hres   = xResolution
+        self.vres   = yResolution
+        self.origin = origin
+        self.s      = s   #Pixel size      
+        self.d      = d   #view plane distance  
         
     def generateRay(self,imgSample):
-        u = self.width * ( imgSample.x * self.invxResolution - 0.5)
-        v = self.height * ( imgSample.y * self.invyResolution - 0.5)
+        xv = self.s * (imgSample.x - self.hres/2 + imgSample.dx)
+        yv = self.s * (imgSample.y - self.vres/2 + imgSample.dy)
         
-        direction = self.lookAt; #FIXME
+        direction = xv*self.basis.u + yv*self.basis.v - self.d*self.basis.w
+        direction = direction/np.linalg.norm(direction)
         
-        return Ray(self.origin, direction)
+        #TODO: Replace point class by numpy array!
+        return Ray(self.origin, Point(direction[0],direction[1],direction[2]))

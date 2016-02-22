@@ -26,12 +26,8 @@ class Point(object):
             self.z = 0.0
                 
     def getArray4(self):
-        vec = np.array([self.x, self.y, self.z, 1.0])
-        colVec = vec.reshape(4,1)
-        return colVec
+        return np.array([self.x, self.y, self.z, 1.0])
     def getArray3(self):
-        vec = np.array([self.x, self.y, self.z])
-        colVec = vec.reshape(3,1)
-        return colVec
+        return np.array([self.x, self.y, self.z])
         
     

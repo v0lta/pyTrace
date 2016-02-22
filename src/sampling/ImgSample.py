@@ -11,9 +11,21 @@ class ImgSample(object):
     '''
 
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, dx=None, dy=None):
         '''
         The constructor creates a new sample. X and y are in image space.
+        dx and dy are deviation from the sample mean.
         '''
         self.x = x
         self.y = y
+        
+        if dx==None:
+            self.dx = 0
+        else:
+            self.dx = dx
+            
+        if dy==None:
+            self.dy = 0
+        else:
+            self.dy = dy
+        

@@ -3,10 +3,11 @@ Created on Feb 17, 2016
 
 @author: moritz
 '''
+from src.camera import Camera
 from src.math.Ray import Ray
 from src.math.Point import Point
 
-class OrthographicCamera(object):
+class OrthographicCamera(Camera):
     '''
     A simple camera without a perspective projection.
     '''
@@ -14,13 +15,21 @@ class OrthographicCamera(object):
 
     def __init__(self, xResolution, yResolution, origin, lookat,s):
         '''
-        Sets up the simple view plane camera
+        Construct a simple camera with all rays in the same direction, but different starting
+        points.
         '''
-        self.hres = xResolution
-        self.vres = yResolution
-        self.origin      = origin
-        self.lookat      = lookat
-        self.s    = s   #Pixel size
+        if (xResolution < 1):
+            raise NameError('The horizontal resolution must be larger or equal to one.')
+        if (yResolution < 1):
+            raise NameError('The vertical resolution must be larger or equal to one.')
+        if (s <= 0):
+            raise NameError('s must be positive')
+        
+        self.hres   = xResolution
+        self.vres   = yResolution
+        self.origin = origin
+        self.lookat = lookat
+        self.s      = s   #Pixel size
         
     def generateRay(self,sample):
         '''

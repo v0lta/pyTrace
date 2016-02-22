@@ -4,7 +4,10 @@ Created on Feb 18, 2016
 @author: moritz
 '''
 
-import subprocess
+# basic Python ray tracer by mortitz wolter.
+# this file is the entry point of the ray tracing process.
+
+#import subprocess
 from src.main import Renderer
 
 print("Starting the ray-tracing process.")

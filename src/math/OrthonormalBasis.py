@@ -5,6 +5,7 @@ Created on Feb 12, 2016
 '''
 
 import numpy as np
+from src.math.Point import Point
 
 class OrthonormalBasis(object):
     '''
@@ -12,14 +13,18 @@ class OrthonormalBasis(object):
     Vectors of unit length.
     '''
 
-
     def __init__(self, a, b):
         '''
         Takes two numpy arrays and computes a cross product to find another orthogonal vector.
         '''
-        self.w = np.linalg.norm(a)
+        if type(a) == Point:
+            a = a.getArray3()
+        if type(b) == Point:
+            b = b.getArray3()
+                
+        self.w = a/np.linalg.norm(a)
         self.u = np.cross(a,b)
-        self.u = np.linalg.norm(self.u);
+        self.u = self.u/np.linalg.norm(self.u);
         self.v = np.cross(self.w,self.u)
         
     def toString(self):
