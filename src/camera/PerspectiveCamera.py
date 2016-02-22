@@ -32,7 +32,7 @@ class PerspectiveCamera(Camera):
         if (d <= 0):
             raise NameError('view plane distance d must be positive')
         
-        self.basis = OrthonormalBasis(lookAt, up);
+        self.basis  = OrthonormalBasis(origin, lookAt, up);
         self.hres   = xResolution
         self.vres   = yResolution
         self.origin = origin

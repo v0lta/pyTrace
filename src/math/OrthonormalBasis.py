@@ -13,17 +13,21 @@ class OrthonormalBasis(object):
     Vectors of unit length.
     '''
 
-    def __init__(self, a, b):
+    def __init__(self, e, l, up):
         '''
-        Takes two numpy arrays and computes a cross product to find another orthogonal vector.
+        Takes eye point, look at point and up vector to come up with a nice basis,
+        following page 154.
         '''
-        if type(a) == Point:
-            a = a.getArray3()
-        if type(b) == Point:
-            b = b.getArray3()
-                
-        self.w = a/np.linalg.norm(a)
-        self.u = np.cross(a,b)
+        if type(e) == Point:
+            e = e.getArray3()
+        if type(l) == Point:
+            l = l.getArray3()
+        if type(up):
+            up = up.getArray3()     
+        
+        self.w = (e - l)
+        self.w = self.w/np.linalg.norm(self.w)
+        self.u = np.cross(up,self.w)
         self.u = self.u/np.linalg.norm(self.u);
         self.v = np.cross(self.w,self.u)
         
