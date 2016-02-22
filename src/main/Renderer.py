@@ -5,14 +5,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from src.camera.SimpleCamera import SimpleCamera
-from src.camera.PerspectiveCamera import PerspectiveCamera
+from src.camera import OrthographicCamera
 
-from src.math.Transformation import Transformation
-from src.math.Point import Point
-from src.shape.Sphere import Sphere
-from src.shape.SimpleSphere import SimpleSphere
-from src.sampling.ImgSample import ImgSample
+from src.math import Transformation
+from src.math import Point
+from src.math import Normal
+from src.shape import Sphere
+from src.shape import SimpleSphere
+from src.shape import SimplePlane
+from src.sampling import ImgSample
 
 
 class Renderer:
@@ -38,7 +39,7 @@ class Renderer:
         
         # initialize the camera.
         #  xResolution, yResolution, origin, lookat,s
-        camera = SimpleCamera(self.width, self.height, Point(0.0, 0.0, -1.0),
+        camera = OrthographicCamera(self.width, self.height, Point(0.0, 0.0, -1.0),
                                    Point(0.0, 0.0, 1.0),0.1)
         
         #camera = PerspectiveCamera(self.width, self.height, Point(0.0, 0.0, 0.0),
@@ -46,14 +47,17 @@ class Renderer:
         #                           np.array([0.0, 1.0, 0.0])  )
         
         # initialize the scene
-        #t1 = Transformation(); t1.scale(1, 1, 1)
-        t2 = Transformation(); t2.translation(0.0,-1.0, 0.0)
         shapes = [];
-        #sphere1 = Sphere(t1); shapes.append(sphere1)
-        sphere2 = Sphere(t2); shapes.append(sphere2)
-        #sphere3 = SimpleSphere(Point(0.0,0.0,0.0),0.5); shapes.append(sphere3)
-        sphere4 = SimpleSphere(Point(0.0,1.0,0.0),1.0); shapes.append(sphere4)
+         
+        t1 = Transformation(); t1.scale(1.0, 1.0, 1.0)
+        sphere1 = Sphere(t1); shapes.append(sphere1)
         
+        #t2 = Transformation(); t2.translation(0.0, 0.0, 0.0)
+        #sphere2 = Sphere(t2); shapes.append(sphere2)
+        
+        #sphere3 = SimpleSphere(Point(0.0,0.0,0.0),0.5); shapes.append(sphere3)
+        #sphere4 = SimpleSphere(Point(0.0,1.0,0.0),1.0); shapes.append(sphere4)
+               
         #create the image matrix
         img = np.zeros((self.width,self.height,3))
         

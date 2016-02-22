@@ -3,10 +3,10 @@ Created on Feb 12, 2016
 
 @author: moritz
 '''
-from src.camera.Camera import Camera
-from src.math.OrthonormalBasis import OrthonormalBasis
-from src.sampling.ImgSample import ImgSample
-from src.math.Ray import Ray
+from src.camera import Camera
+from src.math import OrthonormalBasis
+from src.sampling import ImgSample
+from src.math import Ray
 import math
 
 class PerspectiveCamera(Camera):

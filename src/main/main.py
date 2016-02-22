@@ -5,7 +5,7 @@ Created on Feb 18, 2016
 '''
 
 import subprocess
-from src.main.Renderer import Renderer
+from src.main import Renderer
 
 print("Starting the ray-tracing process.")
 rend1 = Renderer()

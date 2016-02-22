@@ -6,7 +6,7 @@ Created on Feb 17, 2016
 from src.math.Ray import Ray
 from src.math.Point import Point
 
-class SimpleCamera(object):
+class OrthographicCamera(object):
     '''
     A simple camera without a perspective projection.
     '''

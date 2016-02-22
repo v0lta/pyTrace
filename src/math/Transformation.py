@@ -4,7 +4,7 @@ Created on Feb 15, 20.016
 @author: moritz
 '''
 import numpy as np
-from src.math.Ray import Ray
+from src.math import Ray
 
 class Transformation(object):
     '''
@@ -45,7 +45,7 @@ class Transformation(object):
         '''
         Creates a scaling matrix and it's inverse.
         '''
-        self.matrix  = np.array([[x,   0.0, 0.0, 0.0],[0.0, y,   0.0, 0.0], [0.0, 0.0, z,   0.0], [0.0, 0.0, 0.0, 1.0]])
+        self.matrix  = np.array([[x,   0.0, 0.0, 0.0],[0.0, y,   0.0, 0.0], [0.0, 0.0, z, 0.0], [0.0, 0.0, 0.0, 1.0]])
         self.inverse = np.array([[1.0/x, 0.0, 0.0, 0.0],[0.0, 1.0/y, 0.0, 0.0], [0.0, 0.0, 1.0/z, 0.0], [0.0, 0.0, 0.0, 1.0]])
     
     def rotateX(self, theta):
