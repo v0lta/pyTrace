@@ -5,6 +5,8 @@ Created on Feb 15, 20.016
 '''
 import numpy as np
 from src.math import Ray
+from src.math import Point
+from src.math import Normal
 
 class Transformation(object):
     '''
@@ -27,11 +29,21 @@ class Transformation(object):
         else:
             self.inverse = inverse
             
-    def transformInverse(self,inRay):
+    def transformInverse(self, inRay):
         outOrigin = np.dot(self.inverse, inRay.origin.getArray4())
         outDirection = np.dot(self.inverse, inRay.direction.getArray4())
         outRay = Ray(outOrigin,outDirection) 
         return outRay
+    
+    def transformNormal(self, normal):
+        dataArray = np.dot(self.inverse.transpose(), normal.getArray4())
+        if dataArray[3] != 1.0:
+            print "error"
+        return Normal(npArray = dataArray)
+        
+    def transformPoint(self, point):    
+        dataArray = np.dot(self.matrix, point.getArray4())
+        return Point(npArray = dataArray)
         
     def translation(self, x, y, z):
         '''

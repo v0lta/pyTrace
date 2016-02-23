@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #misc
-from src.camera import PerspectiveCamera
 from src.sampling import ImgSample
 
 #math
-from src.math import Point
+from src.math import Intersection
+from src.math import Normal
 
 
 class Renderer:
@@ -42,13 +42,17 @@ class Renderer:
                 currentRay = self.world.camera.generateRay(sample)
                 
                 #Using exhaustive ray Tracing
-                hit = False
                 for currentShape in self.world.shapes:
-                    if currentShape.intersect(currentRay) != False:
-                        hit = True
+                    intersection = currentShape.intersect(currentRay)
+                    if intersection.hit == True:
+                        img[x,y,:] = (self.world.ambient*currentShape.color.getColor()*currentShape.reflectivity +
+                                     (currentShape.reflectivity/3.14 * currentShape.color.getColor()* 
+                                      self.world.pointLight.L()* self.world.pointLight.color.getColor() * 
+                                      np.dot(self.world.pointLight.l(intersection.point),
+                                              intersection.normal.getArray3() )))
+
                         
-                if hit == True:
-                    img[x,y,1] = 1
+
                 
                 
         imgplot = plt.imshow(img)

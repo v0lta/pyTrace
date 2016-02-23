@@ -5,6 +5,9 @@ Created on Feb 15, 2016
 '''
 from src.shape import Shape
 from src.math import Constants
+from src.math import Intersection
+from src.math import Normal
+from src.math import Point
 import numpy as np
 
 
@@ -13,8 +16,10 @@ class Sphere(Shape):
     A class implementing unit spheres spheres (c = 0.0, r = 1.0). 
     Larger or displaced spheres can be obtained by using transformations.
     '''
-    def __init__(self, transformation):
+    def __init__(self, transformation, color, reflectivity):
         self.transformation = transformation
+        self.color = color
+        self.reflectivity = reflectivity
     
     def intersect(self, ray):
         '''
@@ -34,7 +39,7 @@ class Sphere(Shape):
         
         if (d < 0):
             # Negative discriminant => no intersections.
-            return False
+            return Intersection(False)
         else:
             if (b < 0):
                 q = -0.5 *( b - np.sqrt(d))
@@ -45,9 +50,22 @@ class Sphere(Shape):
         t1 = c/q;
         
         #only report a hit if the intersection has a positive t > epsilon.
-        return (t0 >= Constants.epsilon) or (t1 >= Constants.epsilon)
+        hasInt = (t0 >= Constants.epsilon) or (t1 >= Constants.epsilon)
+        if hasInt:
+            if (t0 < t1):
+                hitPointArray = ro + t0*rd 
+                hitPoint = self.transformation.transformPoint(Point(npArray=hitPointArray))
+                hitNormal = self.transformation.transformNormal(Normal(npArray=hitPointArray))
+                return Intersection(hasInt,hitNormal,hitPoint) 
+            else:
+                hitPointArray = ro + t1*rd 
+                hitPoint = self.transformation.transformPoint(Point(npArray=hitPointArray))
+                hitNormal = self.transformation.transformNormal(Normal(npArray=hitPointArray))
+                return Intersection(hasInt,hitNormal,hitPoint)
+        else:
+            return Intersection(False) 
             
-            
+
         
         
     

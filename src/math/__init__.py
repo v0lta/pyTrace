@@ -4,3 +4,5 @@ from OrthonormalBasis import OrthonormalBasis
 from Point import Point
 from Ray import Ray
 from Transformation import Transformation
+from Intersection import Intersection
+from Color import Color
