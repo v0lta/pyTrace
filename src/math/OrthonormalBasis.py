@@ -22,14 +22,14 @@ class OrthonormalBasis(object):
             e = e.getArray3()
         if type(l) == Point:
             l = l.getArray3()
-        if type(up):
+        if type(up) == Point:
             up = up.getArray3()     
         
         self.w = (e - l)
         self.w = self.w/np.linalg.norm(self.w)
-        self.u = np.cross(up,self.w)
+        self.u = np.cross(self.w,up)
         self.u = self.u/np.linalg.norm(self.u);
-        self.v = np.cross(self.w,self.u)
+        self.v = np.cross(self.u,self.w)
         
     def toString(self):
         '''

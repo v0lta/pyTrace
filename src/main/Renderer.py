@@ -50,7 +50,9 @@ class Renderer:
                 if hit == True:
                     img[x,y,1] = 1
                 
+                
         imgplot = plt.imshow(img)
+        plt.gca().invert_yaxis()
         #plt.show()
         plt.savefig("../../img.png")
         

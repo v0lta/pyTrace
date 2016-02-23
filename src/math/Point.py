@@ -9,25 +9,22 @@ class Point(object):
     '''
     Point implementation in three dimensions.
     '''
-    def __init__(self, x=None,y=None,z=None):
+    def __init__(self,x=None,y=None,z=None, npArray=None):
         '''
         Constructor initializing the x,y and z coordinate.
         '''
-        self.x = x
-        self.y = y
-        self.z = z
-        
-        #set defaults.
-        if x == None:
-            self.x = 0.0
-        if y == None:
-            self.y = 0.0
-        if y == None:
-            self.z = 0.0
+         
+        if (npArray == None): 
+            if (x == None) and (y == None) and (z == None):
+                self.npArray = np.array([0., 0., 0.])
+            else:
+                self.npArray = np.array([x,y,z])
+        else:
+            self.npArray = npArray
                 
     def getArray4(self):
-        return np.array([self.x, self.y, self.z, 1.0])
+        return np.array([self.npArray[0], self.npArray[1], self.npArray[2], 1.0])
     def getArray3(self):
-        return np.array([self.x, self.y, self.z])
+        return np.array([self.npArray[0], self.npArray[1], self.npArray[2]])
         
     

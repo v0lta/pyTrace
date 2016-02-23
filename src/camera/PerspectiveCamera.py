@@ -40,11 +40,11 @@ class PerspectiveCamera(Camera):
         self.d      = d   #view plane distance  
         
     def generateRay(self,imgSample):
-        xv = self.s * (imgSample.x - self.hres/2 + imgSample.dx);
-        yv = self.s * (imgSample.y - self.vres/2 + imgSample.dy);
+        xv = self.s * (imgSample.x - self.hres/2.0 + imgSample.dx);
+        yv = self.s * (imgSample.y - self.vres/2.0 + imgSample.dy);
         
         direction = xv*self.basis.u + yv*self.basis.v - self.d*self.basis.w
         direction = direction/np.linalg.norm(direction)
         
-        #TODO: Replace point class by numpy array!
-        return Ray(self.origin, Point(direction[0],direction[1],direction[2]))
+
+        return Ray(self.origin, Point(npArray=direction))

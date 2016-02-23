@@ -16,7 +16,7 @@ print("Starting the ray-tracing process.")
 # (self,world,width,height,sens,gamma):
 
 spWorld = SphereWorld(200,200)
-trWorld = TriangleWorld(200,200)
+trWorld = TriangleWorld(250,250)
 rend1 = Renderer(1.0,1.0,trWorld)
 
 rend1.main()
