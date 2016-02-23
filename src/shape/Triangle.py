@@ -5,19 +5,24 @@ Created on Feb 22, 2016
 '''
 from src.shape import Shape
 from src.math import Constants
+from src.math import Intersection
+from src.math import Normal
+from src.math import Point
 import numpy as np
 
 class Triangle(Shape):
     '''
     A triangle object 
     '''
-    def __init__(self, a,b,c,transformation=None):
+    def __init__(self, a, b, c, color, reflectivity, transformation=None ):
         '''
         Constructor for the triangle class taking the three edge points a,b and c.
         '''
         self.a = a.getArray3()
         self.b = b.getArray3()
         self.c = c.getArray3()
+        self.color = color
+        self.reflectivity = reflectivity
         self.transformation = transformation
         
     def intersect(self, ray):
@@ -46,9 +51,15 @@ class Triangle(Shape):
         x = np.linalg.lstsq(A, b)[0]
         
         if x[2] < Constants.epsilon:
-            return False
+            return Intersection(False)
         else:        
-            return   ( (0.0 <= x[0])      and (x[0] <= 1.0)
+            if   ( (0.0 <= x[0])      and (x[0] <= 1.0)
                    and (0.0 <= x[1])      and (x[0] <= 1.0)
-                   and (0.0 <= x[0]+x[1]) and (x[0]+x[1] <= 1.0))
+                   and (0.0 <= x[0]+x[1]) and (x[0]+x[1] <= 1.0)):
+                hitPointArray = o + x[2]*d 
+                hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
+                hitNormal = Normal(0.0,0.0,1.0) #fixme
+                return Intersection(True,hitNormal,hitPoint)
+            else:
+                return Intersection(False) 
         

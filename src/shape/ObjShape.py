@@ -3,6 +3,8 @@ Created on Feb 23, 2016
 
 @author: moritz
 '''
+from src.shape import Triangle
+from src.math import Point
 
 class ObjShape(object):
     '''
@@ -27,8 +29,19 @@ class ObjShape(object):
         
         #create a list of trinagles.
         self.triangelList = []
-   
-   
+        for el in self.f:
+            
+            ptListA = self.vertices[el[0][0] - 1]
+            a = Point(ptListA[0], ptListA[1], ptListA[2])
+            
+            ptListB = self.vertices[el[1][0] - 1]
+            b = Point(ptListB[0], ptListB[1], ptListB[2])
+            
+            ptListC = self.vertices[el[2][0] - 1]
+            c = Point(ptListC[0], ptListC[1], ptListC[2])
+
+            self.triangelList.append(Triangle(a,b,c))
+            
    
     def read(self):     
         with open(self.path) as file:

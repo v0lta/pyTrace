@@ -50,6 +50,7 @@ class Renderer:
                                       self.world.pointLight.L()* self.world.pointLight.color.getColor() * 
                                       np.dot(self.world.pointLight.l(intersection.point),
                                               intersection.normal.getArray3() )))
+                        print "+"
                         
                         #Fix overflow...
                         for i in range(0,2):

@@ -16,7 +16,7 @@ class Sphere(Shape):
     A class implementing unit spheres spheres (c = 0.0, r = 1.0). 
     Larger or displaced spheres can be obtained by using transformations.
     '''
-    def __init__(self, transformation, color, reflectivity):
+    def __init__(self, color, reflectivity, transformation):
         self.transformation = transformation
         self.color = color
         self.reflectivity = reflectivity
@@ -54,14 +54,14 @@ class Sphere(Shape):
         if hasInt:
             if (t0 < t1):
                 hitPointArray = ro + t0*rd 
-                hitPoint = self.transformation.transformPoint(Point(npArray=hitPointArray))
-                hitNormal = self.transformation.transformNormal(Normal(npArray=hitPointArray))
-                return Intersection(hasInt,hitNormal,hitPoint) 
+                hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
+                hitNormal = self.transformation.transformNormal( Normal( npArray = hitPointArray ))
+                return Intersection(hasInt, hitNormal, hitPoint) 
             else:
                 hitPointArray = ro + t1*rd 
-                hitPoint = self.transformation.transformPoint(Point(npArray=hitPointArray))
-                hitNormal = self.transformation.transformNormal(Normal(npArray=hitPointArray))
-                return Intersection(hasInt,hitNormal,hitPoint)
+                hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
+                hitNormal = self.transformation.transformNormal( Normal( npArray = hitPointArray ))
+                return Intersection(hasInt, hitNormal, hitPoint)
         else:
             return Intersection(False) 
             

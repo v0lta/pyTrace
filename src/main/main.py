@@ -15,9 +15,9 @@ from World import SphereWorld
 print("Starting the ray-tracing process.")
 # (self,world,width,height,sens,gamma):
 
-spWorld = SphereWorld(200,200,1.0)
-#trWorld = TriangleWorld(250,250,0.0)
-rend1 = Renderer(1.0,1.0,spWorld)
+#spWorld = SphereWorld(300,300,1.0)
+trWorld = TriangleWorld(250,250,0.0)
+rend1 = Renderer(1.0,1.0,trWorld)
 
 rend1.main()
 #subprocess.call("eog /home/moritz/workspace/pyTrace/img.png", shell=True)

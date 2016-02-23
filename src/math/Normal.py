@@ -17,10 +17,10 @@ class Normal(object):
         if npArray != None:
             self.npArray = npArray
         else:
-            self.npArray = np.array(a,b,c)
+            self.npArray = np.array([a,b,c])
         
         #normalize
-        self.npArray = self.npArray/np.linalg.norm(npArray)
+        self.npArray = self.npArray/np.linalg.norm(self.npArray)
         
     def getArray3(self):
         return self.npArray[0:3]
