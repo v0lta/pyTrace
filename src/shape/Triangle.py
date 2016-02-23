@@ -11,21 +11,28 @@ class Triangle(Shape):
     '''
     A triangle object 
     '''
-    def __init__(self, a,b,c):
+    def __init__(self, a,b,c,transformation=None):
         '''
         Constructor for the triangle class taking the three edge points a,b and c.
         '''
         self.a = a.getArray3()
         self.b = b.getArray3()
         self.c = c.getArray3()
+        self.transformation = transformation
         
     def intersect(self, ray):
         '''
         The intersection routine
         '''
-        o = ray.origin.getArray3()
-        d = ray.direction.getArray3()
         a = self.a; b = self.b; c = self.c;
+        
+        if self.transformation != None:
+            rayInv = self.transformation.transformInverse(ray)
+            o = rayInv.origin[0:3]
+            d = rayInv.direction[0:3]
+        else:        
+            o = ray.origin.getArray3()
+            d = ray.direction.getArray3()
         
         
         A = [[a[0] - b[0], a[0] - c[0], d[0]],

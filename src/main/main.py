@@ -9,9 +9,16 @@ Created on Feb 18, 2016
 
 #import subprocess
 from src.main import Renderer
+from World import TriangleWorld
+from World import SphereWorld
 
 print("Starting the ray-tracing process.")
-rend1 = Renderer()
+# (self,world,width,height,sens,gamma):
+
+spWorld = SphereWorld(200,200)
+trWorld = TriangleWorld(200,200)
+rend1 = Renderer(1.0,1.0,trWorld)
+
 rend1.main()
 #subprocess.call("eog /home/moritz/workspace/pyTrace/img.png", shell=True)
 print("Done.")

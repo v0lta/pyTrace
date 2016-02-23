@@ -5,5 +5,5 @@ Created on Feb 22, 2016
 '''
 
 class Constants:
-    epsilon = 0.01
+    epsilon = 0.0
     

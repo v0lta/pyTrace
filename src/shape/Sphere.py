@@ -25,9 +25,9 @@ class Sphere(Shape):
         ro = rayInv.origin[0:3]
         rd = rayInv.direction[0:3]
 
-        a = np.dot(rd.transpose(), rd) 
-        b = 2.0 * np.dot(ro.transpose(), rd)
-        c = np.dot(ro.transpose(), ro) - 1.0
+        a = np.dot(rd, rd) 
+        b = 2.0 * np.dot(ro, rd)
+        c = np.dot(ro, ro) - 1.0
  
         #the discriminant decides what values the roots are going to have.
         d = b*b - 4.0*a*c

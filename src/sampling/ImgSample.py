@@ -20,12 +20,12 @@ class ImgSample(object):
         self.y = y
         
         if dx==None:
-            self.dx = 0
+            self.dx = 0.5
         else:
             self.dx = dx
             
         if dy==None:
-            self.dy = 0
+            self.dy = 0.5
         else:
             self.dy = dy
         

@@ -2,80 +2,48 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #misc
-from src.camera import OrthographicCamera
 from src.camera import PerspectiveCamera
 from src.sampling import ImgSample
 
 #math
-from src.math import Transformation
 from src.math import Point
-from src.math import Normal
-
-#shapes
-from src.shape import Sphere
-from src.shape import SimpleSphere
-from src.shape import Triangle
-#from src.shape import SimplePlane
-
 
 
 class Renderer:
-    def __init__(self):
-        self.width       = 100
-        self.height      = 100
-        self.sensitivity = 1.0
-        self.gamma       = 2.2
+    def __init__(self,sens,gamma,world):
+        
+        # validate the input 
+        if (world.width <= 0):
+            raise NameError('Width must be positive.')
+        if (world.height <= 0):
+            raise NameError('Height must be positive.')
+        if (gamma <= 0):
+            raise NameError('Gamma must be positive.')
+        if (sens <= 0):
+            raise NameError('Sensitivity must be positive.')
+                
+        self.width       = world.width
+        self.height      = world.height
+        self.sensitivity = sens
+        self.gamma       = gamma
+        self.world       = world
 
 
     def main(self):    
         # parse command line arguments...(comes later)
     
-        # validate the input 
-        if (self.width <= 0):
-            raise NameError('Width must be positive.')
-        if (self.height <= 0):
-            raise NameError('Height must be positive.')
-        if (self.gamma <= 0):
-            raise NameError('Gamma must be positive.')
-        if (self.sensitivity <= 0):
-            raise NameError('Sensitivity must be positive.')
-        
-        # initialize the camera.
-        #  xResolution, yResolution, origin, lookat,s
-        #camera = OrthographicCamera(self.width, self.height, Point(0.0, 0.0, -1.0),
-        #                           Point(0.0, 0.0, 1.0),0.05)
-        
-        
-        #xResolution, yResolution, origin, lookAt, up, s, d
-        camera = PerspectiveCamera(self.width, self.height, Point(0.0, 0.0, -1.0),
-                                   Point(0.0, 0.0, 1.0), Point(0.0, 1.0, 0.0),
-                                   0.01, 0.5)
-        
-        # initialize the scene
-        shapes = [];
-         
-        #t1 = Transformation(); t1.scale(1.0, 1.0, 1.0)
-        #sphere1 = Sphere(t1); shapes.append(sphere1)
-        
-        #t2 = Transformation(); t2.translation(0.0, 2.0, 0.0)
-        #sphere2 = Sphere(t2); shapes.append(sphere2)
-        
-        #sphere3 = SimpleSphere(Point(0.0,0.0,0.0),1.0); shapes.append(sphere3)
-               
-        triangle1 = Triangle(Point(-0.5,-0.5,0.0),Point(0.5,0.5,0.0),Point(0.0,1.0,0.0))
-        shapes.append(triangle1)
-    
+            
         #create the image matrix
         img = np.zeros((self.width,self.height,3))
         
         for x in range(0,self.width):
             for y in range(0,self.height):
                 sample = ImgSample(x,y)
-                currentRay = camera.generateRay(sample)
+                currentRay = self.world.camera.generateRay(sample)
                 
                 #Using exhaustive ray Tracing
                 hit = False
-                for currentShape in shapes:
+                for currentShape in self.world.shapes:
                     if currentShape.intersect(currentRay) != False:
                         hit = True
                         

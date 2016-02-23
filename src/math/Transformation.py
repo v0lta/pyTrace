@@ -38,43 +38,48 @@ class Transformation(object):
         Creates a translation matrix and it's inverse. The translation displaces an object along
         the x,y and z values given.
         '''
-        self.matrix  = np.array([[1.0, 0.0, 0.0,  x], [0.0, 1.0, 0.0,  y], [0.0, 0.0, 1.0,  z], [0.0, 0.0, 0.0, 1.0]])
-        self.inverse = np.array([[1.0, 0.0, 0.0, -x], [0.0, 1.0, 0.0, -y], [0.0, 0.0, 1.0, -z], [0.0, 0.0, 0.0, 1.0]])
+        self.matrix  = np.dot( self.matrix,np.array([[1., 0., 0.,  x], [0., 1., 0.,  y], [0., 0., 1.,  z], [0., 0., 0., 1.]]))
+        self.inverse = np.dot(self.inverse,np.array([[1., 0., 0., -x], [0., 1., 0., -y], [0., 0., 1., -z], [0., 0., 0., 1.]]))
+        
         
     def scale(self, x, y, z):
         '''
         Creates a scaling matrix and it's inverse.
         '''
-        self.matrix  = np.array([[x,   0.0, 0.0, 0.0],[0.0, y,   0.0, 0.0], [0.0, 0.0, z, 0.0], [0.0, 0.0, 0.0, 1.0]])
-        self.inverse = np.array([[1.0/x, 0.0, 0.0, 0.0],[0.0, 1.0/y, 0.0, 0.0], [0.0, 0.0, 1.0/z, 0.0], [0.0, 0.0, 0.0, 1.0]])
+        self.matrix  = np.dot( self.matrix,np.array([[x,     0.0, 0.0, 0.0],[0.0,     y, 0.0, 0.0], [0.0, 0.0,     z, 0.0], [0.0, 0.0, 0.0, 1.0]]))
+        self.inverse = np.dot(self.inverse,np.array([[1.0/x, 0.0, 0.0, 0.0],[0.0, 1.0/y, 0.0, 0.0], [0.0, 0.0, 1.0/z, 0.0], [0.0, 0.0, 0.0, 1.0]]))
     
     def rotateX(self, theta):
         '''
         Rotates an object theta degrees around the x-axis.
         '''
         theta = theta*(np.pi/180.0)
-        self.matrix  = np.array([1.0,          0.0,           0.0,0.0],
+        self.matrix  = np.dot(self.matrix, 
+                       np.array([[1.0,          0.0,           0.0,0.0],
                                 [0.0,np.cos(theta),-np.sin(theta),0.0],
                                 [0.0,np.sin(theta), np.cos(theta) ,0.0],
-                                [0.0,            0.0,             0.0,1.0])
-        self.inverse = np.array([1.0,           0.0,             0.0,0.0],
+                                [0.0,            0.0,             0.0,1.0]]))
+        self.inverse = np.dot(self.inverse,
+                              np.array([[1.0,           0.0,             0.0,0.0],
                                 [0.0,np.cos(theta),np.sin(theta)   ,0.0],
                                 [0.0,-np.sin(theta), np.cos(theta) ,0.0],
-                                [0.0,            0.0,           0.0,1.0])
+                                [0.0,            0.0,           0.0,1.0]]))
         
     def rotateY(self, theta):
         '''
         Rotates an object theta degrees around the y-axis.
         '''
         theta = theta*(np.pi/180.0)
-        self.matrix = np.array([np.cos(theta),  0.0, np.sin(theta),0.0],
+        self.matrix = np.dot(self.matrix,
+                      np.array([[np.cos(theta),  0.0, np.sin(theta),0.0],
                                 [           0.0, 1.0,             0.0,0.0],
                                 [-np.sin(theta), 0.0, np.cos(theta),0.0],
-                                [           0.0, 0.0,           0.0,1.0])
-        self.inverse = np.array([ np.cos(theta), 0.0, -np.sin(theta),0.0],
+                                [           0.0, 0.0,           0.0,1.0]]))
+        self.inverse =  np.dot(self.inverse,
+                        np.array([[ np.cos(theta), 0.0, -np.sin(theta),0.0],
                                 [           0.0, 1.0,            0.0,0.0],
                                 [np.sin(theta), 0.0, np.cos(theta),0.0],
-                                [          0.0, 0.0,           0.0,1.0])
+                                [          0.0, 0.0,           0.0,1.0]]))
         
         
     def rotateZ(self, theta):
@@ -82,14 +87,16 @@ class Transformation(object):
         Rotates an object theta degrees around the z-axis.
         '''
         theta = theta*(np.pi/180.0)
-        self.matrix = np.array([np.cos(theta),  -np.sin(theta),0.0,0.0],
+        self.matrix = np.dot(self.matrix,
+                      np.array( [[np.cos(theta),  -np.sin(theta),0.0,0.0],
                                 [np.sin(theta),   np.cos(theta),0.0,0.0],
-                                [            0.0,           0.0,1.0,0.0],
-                                [            0.0,           0.0,0.0,1.0])
-        self.inverse = np.array([np.cos(theta),  np.sin(theta),0.0,0.0],
+                                [          0.0,           0.0,1.0,0.0],
+                                [          0.0,           0.0,0.0,1.0]]))
+        self.inverse =  np.dot(self.inverse,
+                        np.array([[np.cos(theta),  np.sin(theta),0.0,0.0],
                                 [-np.sin(theta), np.cos(theta),0.0,0.0],
                                 [           0.0,           0.0,1.0,0.0],
-                                [           0.0,           0.0,0.0,1.0])
+                                [           0.0,           0.0,0.0,1.0]]))
     
     
         

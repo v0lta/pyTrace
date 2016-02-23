@@ -40,8 +40,8 @@ class PerspectiveCamera(Camera):
         self.d      = d   #view plane distance  
         
     def generateRay(self,imgSample):
-        xv = self.s * (imgSample.x - self.hres/2 + imgSample.dx)
-        yv = self.s * (imgSample.y - self.vres/2 + imgSample.dy)
+        xv = self.s * (imgSample.x - self.hres/2 + imgSample.dx);
+        yv = self.s * (imgSample.y - self.vres/2 + imgSample.dy);
         
         direction = xv*self.basis.u + yv*self.basis.v - self.d*self.basis.w
         direction = direction/np.linalg.norm(direction)
