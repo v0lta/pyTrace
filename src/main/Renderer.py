@@ -50,10 +50,15 @@ class Renderer:
                                       self.world.pointLight.L()* self.world.pointLight.color.getColor() * 
                                       np.dot(self.world.pointLight.l(intersection.point),
                                               intersection.normal.getArray3() )))
-
                         
+                        #Fix overflow...
+                        for i in range(0,2):
+                            if img[x,y,i] > 1.0:
+                                #img[x,y,:] = img[x,y,:]/img[x,y,i]
+                                #img[x,y,:] = img[x,y,:]/5.0; 
+                                img[x,y,:] = [1.,0.,0.]
 
-                
+        
                 
         imgplot = plt.imshow(img)
         plt.gca().invert_yaxis()

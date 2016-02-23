@@ -37,8 +37,8 @@ class Transformation(object):
     
     def transformNormal(self, normal):
         dataArray = np.dot(self.inverse.transpose(), normal.getArray4())
-        if dataArray[3] != 1.0:
-            print "error"
+        #if dataArray[3] != 1.0:
+            #print "error"
         return Normal(npArray = dataArray)
         
     def transformPoint(self, point):    

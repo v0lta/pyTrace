@@ -67,20 +67,20 @@ class SphereWorld:
                                    1.0/width, 1.0)
         
         #set up a point light (position, shadows, color, ls)
-        self.pointLight = PointLight(Point(0.0, 1.0, -4.0), False, Color(1.,1.,1.), 4.)
+        self.pointLight = PointLight(Point(2.0, 2.0, -4.0), False, Color(.8,.8,.8), 4.)
         
         # initialize the scene
         self.shapes = [];    
         trans = Transformation(); 
-        trans.translation(0.1, 0., 0.)
+        trans.translation(0.2, 0., 0.)
         trans.scale(0.75, 0.75, 0.75)                       
-        sphere = Sphere(trans, Color(1.,1.,0.), 1. ); #red sphere at the origin.
+        sphere = Sphere(trans, Color(0.,0.6,0.), 0.9 ); #red sphere at the origin.
         self.shapes.append(sphere)
         
         trans = Transformation(); 
-        trans.translation(-0.2, 0., 0.)
+        trans.translation(-0.25, 0.1, 0.)
         trans.scale(0.75, 0.75, 0.75)                       
-        sphere = Sphere(trans, Color(0.,1.,1.), 1. ); #red sphere at the origin.
+        sphere = Sphere(trans, Color(0.,0.6,0.6), 0.9 ); #red sphere at the origin.
         self.shapes.append(sphere)
         
         
