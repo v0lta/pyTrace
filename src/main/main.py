@@ -16,10 +16,10 @@ import time
 print("Starting the ray-tracing process.")
 # (self,world,width,height,sens,gamma):
 
-#spWorld = SphereWorld(300,300,1.0)
-trWorld = TriangleWorld(200,200,0.4)
+spWorld = SphereWorld(300,300,1.0)
+#trWorld = TriangleWorld(200,200,0.4)
 print("world created.")
-rend1 = Renderer(1.0,1.0,trWorld)
+rend1 = Renderer(1.0,1.0,spWorld)
 
 #use the single process implementation
 if True:

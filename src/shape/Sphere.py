@@ -56,12 +56,12 @@ class Sphere(Shape):
                 hitPointArray = ro + t0*rd 
                 hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
                 hitNormal = self.transformation.transformNormal( Normal( npArray = hitPointArray ))
-                return Intersection(hasInt, hitNormal, hitPoint) 
+                return Intersection(hasInt, hitNormal, hitPoint, self.color) 
             else:
                 hitPointArray = ro + t1*rd 
                 hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
                 hitNormal = self.transformation.transformNormal( Normal( npArray = hitPointArray ))
-                return Intersection(hasInt, hitNormal, hitPoint)
+                return Intersection(hasInt, hitNormal, hitPoint, self.color)
         else:
             return Intersection(False) 
             

@@ -11,16 +11,13 @@ class Intersection(object):
     '''
 
 
-    def __init__(self, hit, normal=None, point=None):
+    def __init__(self, hit, normal=None, point=None, color = None):
         '''
         The intersection constructor takes the bool has Int
         the intersection point and the normal at that point.
         '''
         self.hit  = hit
-        if normal != None:
+        if hit == True:
             self.normal = normal
-            if point != None:
-                self.point = point
-            else:
-                raise ValueError, "Forgot to specify the hit point"
-        
+            self.point = point
+            self.color = color

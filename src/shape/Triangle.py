@@ -63,6 +63,7 @@ class Triangle(Shape):
               
         x = np.linalg.lstsq(A, b)[0]
         
+        
         if x[2] < Constants.epsilon:
             return Intersection(False)
         else:        
@@ -73,7 +74,7 @@ class Triangle(Shape):
                 hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
                 hitNormalArray = (1 - x[0] - x[1])*self.an.getArray3() + x[0]*self.bn.getArray3() + x[1]*self.cn.getArray3()
                 hitNormal = self.transformation.transformNormal( Normal(npArray = hitNormalArray))
-                return Intersection(True,hitNormal,hitPoint)
+                return Intersection(True, hitNormal, hitPoint, self.color)
             else:
                 return Intersection(False) 
         

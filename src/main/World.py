@@ -6,13 +6,13 @@ Created on Feb 23, 2016
 from src.camera import PerspectiveCamera
 from src.lights import PointLight
 
-from src.shape import Triangle
-from src.shape import Sphere
-from src.shape import ObjShape
+from src.shape import Triangle, Sphere, ObjShape, Plane
+from src.material import Chess
 
 from src.math import Transformation
 from src.math import Point
 from src.math import Color
+from src.math.Normal import Normal
 
 class TriangleWorld(object):
     '''
@@ -55,26 +55,40 @@ class SphereWorld:
         self.ambient = ambient
         
         #xResolution, yResolution, origin, lookAt, up, s, d
-        self.camera = PerspectiveCamera(width, height, Point(0.0, 0.0, -5.0),
+        self.camera = PerspectiveCamera(width, height, Point(-2.0, 0.0, -5.0),
                                    Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
                                    1.0/width, 1.0)
         
         #set up a point light (position, shadows, color, ls)
-        self.pointLight = PointLight(Point(2.0, 2.0, -4.0), False, Color(.8,.8,.8), 4.)
+        self.pointLight = PointLight(Point(0.0, 4.0, -0.5), False, Color(.8,.8,.8), 4.)
+        
         
         # initialize the scene
         self.shapes = [];    
+        #background plane
+        chessPattern = Chess(Color(0.1,0.1,0.1),Color(0.3,0.3,0.3),0.5)
+        p1 = Plane(Point(0.0,0.0,5.0),Normal(0.0,0.0,-1.0), chessPattern, 0.9)
+        self.shapes.append(p1)
+        
+        #sphere 1
         trans = Transformation(); 
         trans.translation(0.2, 0., 0.)
         trans.scale(0.75, 0.75, 0.75)                       
         sphere = Sphere(Color(0.,0.6,0.), 0.9, trans ); #red sphere at the origin.
         self.shapes.append(sphere)
         
+        #sphere 2
         trans = Transformation(); 
-        trans.translation(-0.25, 0.1, 0.)
+        trans.translation(-0.3, 0.1, 0.)
         trans.scale(0.75, 0.75, 0.75)                       
         sphere = Sphere(Color(0.,0.6,0.6), 0.9, trans ); #red sphere at the origin.
         self.shapes.append(sphere)
+        
+        
+        
+        
+        
+        
         
         
         
