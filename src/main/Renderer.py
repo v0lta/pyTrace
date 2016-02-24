@@ -43,35 +43,38 @@ class Renderer:
                 currentRay = self.world.camera.generateRay(sample)
                 
                 #Using exhaustive ray Tracing
-                intersectionList = [];
+                intersectionLst = [];
    
                 for currentShape in self.world.shapes:
                     
                     intersection = currentShape.intersect(currentRay)
                     if intersection.hit == True:
-                        intersectionList.append(intersection)
+                        intersectionLst.append(intersection)
                 
-                if intersectionList:       
+                if intersectionLst:       
                     #Find the intersection closest to the camera. (There can only be one camera.)
                     dists = []
-                    for currentIntersetion in intersectionList:
-                        camPos = self.world.pointLight.position.getArray3()
+                    for currentIntersetion in intersectionLst:
+                        camPos = self.world.camera.origin.getArray3()
                         intPos = currentIntersetion.point.getArray3()
                         dist = np.linalg.norm(camPos - intPos) 
                         dists.append(dist)
                     index = dists.index(min(dists))
-                    intersection = intersectionList[index]
+                    intersection = intersectionLst[index]
                            
                     #use the found intersection for rendering.
                     La = self.world.ambient
                     Rs = currentShape.reflectivity
                     Cs = intersection.color.getColor()
-                    Lp = self.world.pointLight.L()
-                    Cp = self.world.pointLight.color.getColor()
-                    l  = self.world.pointLight.l(intersection.point)
-                    n  = intersection.normal.getArray3()
-                        
-                    img[x,y,:] = La*Cs*Rs + (Rs/3.14 * Cs* Lp* Cp * np.dot(l,n ))
+                    img[x,y,:] = La*Cs*Rs
+                    
+                    #add a contribution for each light.
+                    for pl in self.world.pointLightLst:
+                        Lp = pl.L()
+                        Cp = pl.color.getColor()
+                        l  = pl.l(intersection.point)
+                        n  = intersection.normal.getArray3()
+                        img[x,y,:] = img[x,y,:] + (Rs/3.14 * Cs* Lp* Cp * np.dot(l,n ))
 
                         
                     #Fix overflow...

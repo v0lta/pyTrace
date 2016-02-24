@@ -13,6 +13,10 @@ from World import TriangleWorld
 from World import SphereWorld
 import time
 
+import profile
+
+
+
 print("Starting the ray-tracing process.")
 # (self,world,width,height,sens,gamma):
 
@@ -20,6 +24,12 @@ print("Starting the ray-tracing process.")
 trWorld = TriangleWorld(200,200,0.4)
 print("world created.")
 rend1 = Renderer(1.0,1.0,trWorld)
+
+#profiling
+if False:
+    t = time.time()
+    profile.run('rend1.main()')
+    print time.time() - t
 
 #use the single process implementation
 if True:

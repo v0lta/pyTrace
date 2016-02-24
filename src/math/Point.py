@@ -16,15 +16,18 @@ class Point(object):
          
         if (npArray == None): 
             if (x == None) and (y == None) and (z == None):
-                self.npArray = np.array([0., 0., 0.])
+                self.npArray = np.array([0., 0., 0., 1.])
             else:
-                self.npArray = np.array([x,y,z])
+                self.npArray = np.array([x,y,z, 1.])
         else:
-            self.npArray = npArray
+            if len(npArray) == 4:
+                self.npArray = npArray
+            else:
+                self.npArray = np.array([npArray[0], npArray[1], npArray[2], 1.0])
                 
     def getArray4(self):
-        return np.array([self.npArray[0], self.npArray[1], self.npArray[2], 1.0])
+        return self.npArray
     def getArray3(self):
-        return np.array([self.npArray[0], self.npArray[1], self.npArray[2]])
+        return self.npArray[0:3]
         
     

@@ -42,39 +42,51 @@ class Triangle(Shape):
         '''
         The intersection routine
         '''
-        a = self.a; b = self.b; c = self.c;
+        pa = self.a; pb = self.b; pc = self.c;
         
         if self.transformation != None:
             rayInv = self.transformation.transformInverse(ray)
-            o = rayInv.origin[0:3]
-            d = rayInv.direction[0:3]
+            ro = rayInv.origin[0:3]
+            rd = rayInv.direction[0:3]
         else:        
-            o = ray.origin.getArray3()
-            d = ray.direction.getArray3()
+            ro = ray.origin.getArray3()
+            rd = ray.direction.getArray3()
         
         
-        A = [[a[0] - b[0], a[0] - c[0], d[0]],
-             [a[1] - b[1], a[1] - c[1], d[1]],
-             [a[2] - b[2], a[2] - c[2], d[2]]]
+        a = pa[0] - pb[0]; b = pa[0] - pc[0]; c = rd[0]; d = pa[0] - ro[0];
+        e = pa[1] - pb[1]; f = pa[1] - pc[1]; g = rd[1]; h = pa[1] - ro[1];
+        i = pa[2] - pb[2]; j = pa[2] - pc[2]; k = rd[2]; l = pa[2] - ro[2];
         
-        b = [ a[0] - o[0],
-              a[1] - o[1],
-              a[2] - o[2]];
-              
-        x = np.linalg.lstsq(A, b)[0]
+        m = f*k - g*j; n = h*k - g*l; p = f*l - h*j;
+        q = g*i - e*k; s = e*j - f*i;
         
+        invDenom = 1.0 / (a*m + b*q + c*s) 
         
-        if x[2] < Constants.epsilon:
+        e1 = d*m - b*n - c*p;
+        beta = e1 * invDenom
+        
+        if beta < 0.0:
             return Intersection(False)
-        else:        
-            if   ( (0.0 <= x[0])      and (x[0] <= 1.0)
-                   and (0.0 <= x[1])      and (x[0] <= 1.0)
-                   and (0.0 <= x[0]+x[1]) and (x[0]+x[1] <= 1.0)):
-                hitPointArray = o + x[2]*d 
-                hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
-                hitNormalArray = (1 - x[0] - x[1])*self.an.getArray3() + x[0]*self.bn.getArray3() + x[1]*self.cn.getArray3()
-                hitNormal = self.transformation.transformNormal( Normal(npArray = hitNormalArray))
-                return Intersection(True, hitNormal, hitPoint, self.color)
-            else:
-                return Intersection(False) 
+        
+        r = e*l - h*i
+        e2 = a*n + d*q + c*r
+        gamma = e2*invDenom
+        
+        if (gamma < 0.0):
+            return Intersection(False)
+        
+        if (beta + gamma > 1.0):
+            return Intersection(False)
+        
+        e3 = a*p - b*r + d*s
+        t = e3 * invDenom
+        
+        if t < Constants.epsilon:
+            return Intersection(False)
+        
+        hitPointArray = ro + t*rd 
+        hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
+        hitNormalArray = (1 - beta - gamma)*self.an.getArray3() + beta*self.bn.getArray3() + gamma*self.cn.getArray3()
+        hitNormal = self.transformation.transformNormal( Normal(npArray = hitNormalArray))
+        return Intersection(True, hitNormal, hitPoint, self.color)
         

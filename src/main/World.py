@@ -28,14 +28,17 @@ class TriangleWorld(object):
         self.height = height
         self.ambient = ambient
         
-        #xResolution, yResolution, origin, lookAt, up, s, d
+        #set up the camera (xResolution, yResolution, origin, lookAt, up, s, d)
         self.camera = PerspectiveCamera(width, height, Point(-2.0, 2.0, -5.0),
                                    Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
                                    1.0/width, 1.0)
         
-        #set up a point light (position, shadows, color, ls)
-        self.pointLight = PointLight(Point(0.0, 4.0, -0.5), False, Color(.8,.8,.8), 4.)
-        
+        #set up the lights (position, shadows, color, ls)
+        self.pointLightLst = []
+        pointLight1 = PointLight(Point(0.0, 4.0, -0.5), False, Color(.8,.0,.0), 4.)
+        pointLight2 = PointLight(Point(-4.0, 0.0, -0.5), False, Color(.0,.8,.8), 4.)
+        self.pointLightLst.append(pointLight1)
+        self.pointLightLst.append(pointLight2)
         
         # initialize the scene
         self.shapes = [];    
@@ -46,7 +49,7 @@ class TriangleWorld(object):
         
         
         trans3 = Transformation();
-        obj = ObjShape("../../obj/cube.obj",Color(0.0,0.6,0.0), 0.8, trans3)
+        obj = ObjShape("../../obj/cube.obj",Color(0.5,0.6,0.5), 0.8, trans3)
         self.shapes = self.shapes + obj.triangleList 
 
         
@@ -66,8 +69,10 @@ class SphereWorld:
                                    Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
                                    1.0/width, 1.0)
         
-        #set up a point light (position, shadows, color, ls)
-        self.pointLight = PointLight(Point(0.0, 4.0, -0.5), False, Color(.8,.8,.8), 4.)
+        #set up the lights (position, shadows, color, ls)
+        self.pointLightLst = []
+        pointLight1 = PointLight(Point(0.0, 4.0, -0.5), False, Color(.8,.8,.8), 4.)
+        self.pointLightLst.append(pointLight1)
         
         
         # initialize the scene

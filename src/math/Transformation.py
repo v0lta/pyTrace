@@ -29,9 +29,9 @@ class Transformation(object):
         else:
             self.inverse = inverse
             
-    def transformInverse(self, inRay):
-        outOrigin = np.dot(self.inverse, inRay.origin.getArray4())
-        outDirection = np.dot(self.inverse, inRay.direction.getArray4())
+    def transformInverse(self, ray):
+        outOrigin = np.dot(self.inverse, ray.origin.getArray4())
+        outDirection = np.dot(self.inverse, ray.direction.getArray4())
         outRay = Ray(outOrigin,outDirection) 
         return outRay
     

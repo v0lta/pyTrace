@@ -16,3 +16,12 @@ class Ray(object):
         '''
         self.origin = origin
         self.direction = direction
+        
+    def set(self, origin, direction):
+        self.origin = origin
+        self.direction = direction
+        
+    def getArray4(self):
+        return self.npArray
+    def getArray3(self):
+        return self.npArray[0:3]
