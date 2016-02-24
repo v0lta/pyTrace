@@ -24,8 +24,8 @@ class Plane(Shape):
         '''
         The ray object intersection function for a planes without transformations.
         '''
-        ro = ray.origin.getArray3()
-        rd = ray.direction.getArray3()
+        ro = ray.getOrigin3()
+        rd = ray.getDirection3()
         
         if np.dot == np.dot(self.n,rd):
             return Intersection(False)

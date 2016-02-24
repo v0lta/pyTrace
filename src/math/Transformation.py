@@ -4,9 +4,6 @@ Created on Feb 15, 20.016
 @author: moritz
 '''
 import numpy as np
-from src.math import Ray
-from src.math import Point
-from src.math import Normal
 
 class Transformation(object):
     '''
@@ -30,20 +27,20 @@ class Transformation(object):
             self.inverse = inverse
             
     def transformInverse(self, ray):
-        outOrigin = np.dot(self.inverse, ray.origin.getArray4())
-        outDirection = np.dot(self.inverse, ray.direction.getArray4())
-        outRay = Ray(outOrigin,outDirection) 
-        return outRay
+        outOrigin = np.dot(self.inverse, ray.getOrigin4())
+        outDirection = np.dot(self.inverse, ray.getDirection4())
+        ray.set(outOrigin, outDirection)
+        return ray
     
     def transformNormal(self, normal):
         dataArray = np.dot(self.inverse.transpose(), normal.getArray4())
-        #if dataArray[3] != 1.0:
-            #print "error"
-        return Normal(npArray = dataArray)
+        normal.set(dataArray)
+        return normal
         
     def transformPoint(self, point):    
         dataArray = np.dot(self.matrix, point.getArray4())
-        return Point(npArray = dataArray)
+        point.set(dataArray)
+        return point
         
     def translation(self, x, y, z):
         '''

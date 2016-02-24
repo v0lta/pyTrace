@@ -40,7 +40,7 @@ class Triangle(Shape):
         
     def intersect(self, ray):
         '''
-        The intersection routine
+        The intersection routine taken from the book.
         '''
         pa = self.a; pb = self.b; pc = self.c;
         

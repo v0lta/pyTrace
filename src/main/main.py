@@ -17,11 +17,12 @@ import profile
 
 
 
+
 print("Starting the ray-tracing process.")
 # (self,world,width,height,sens,gamma):
 
 #spWorld = SphereWorld(300,300,1.0)
-trWorld = TriangleWorld(200,200,0.4)
+trWorld = TriangleWorld(100,100,0.4)
 print("world created.")
 rend1 = Renderer(1.0,1.0,trWorld)
 
@@ -32,13 +33,13 @@ if False:
     print time.time() - t
 
 #use the single process implementation
-if True:
+if False:
     t = time.time()
     rend1.main()
     print time.time() - t
 
 #use the multiprocess implementation
-if False:
+if True:
     t = time.time()
     rend1.multiRend()
     print time.time() - t

@@ -14,14 +14,27 @@ class Ray(object):
         '''
         Sets the starting point or origin and the direction into which the ray moves.
         '''
-        self.origin = origin
-        self.direction = direction
+        if type(origin) == 'numpy.ndarray':
+            self.origin = origin
+            self.direction = direction
+        else:
+            self.origin = origin.getArray4()
+            self.direction = direction.getArray4()
+
         
     def set(self, origin, direction):
+        '''
+        Only set 4 dim nparrays, no type check for speed.
+        '''
         self.origin = origin
         self.direction = direction
         
-    def getArray4(self):
-        return self.npArray
-    def getArray3(self):
-        return self.npArray[0:3]
+    def getOrigin4(self):      
+        return self.origin
+    def getOrigin3(self):
+        return self.origin[0:3]
+    def getDirection4(self):
+        return self.direction
+    def getDirection3(self):
+        return self.direction[0:3]
+    

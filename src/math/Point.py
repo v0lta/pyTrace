@@ -25,6 +25,9 @@ class Point(object):
             else:
                 self.npArray = np.array([npArray[0], npArray[1], npArray[2], 1.0])
                 
+    def set(self,npArray):
+                self.npArray = npArray
+                
     def getArray4(self):
         return self.npArray
     def getArray3(self):

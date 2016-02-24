@@ -49,7 +49,7 @@ class TriangleWorld(object):
         
         
         trans3 = Transformation();
-        obj = ObjShape("../../obj/cube.obj",Color(0.5,0.6,0.5), 0.8, trans3)
+        obj = ObjShape("../../obj/sphere.obj",Color(0.5,0.6,0.5), 0.8, trans3)
         self.shapes = self.shapes + obj.triangleList 
 
         

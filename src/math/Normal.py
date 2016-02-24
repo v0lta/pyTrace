@@ -21,6 +21,9 @@ class Normal(object):
         
         #normalize
         self.npArray = self.npArray/np.linalg.norm(self.npArray)
+       
+    def set(self,npArray):
+        self.npArray = npArray   
         
     def getArray3(self):
         return self.npArray[0:3]
