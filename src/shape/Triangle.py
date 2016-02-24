@@ -14,7 +14,7 @@ class Triangle(Shape):
     '''
     A triangle object 
     '''
-    def __init__(self, a, b, c, color, reflectivity, transformation=None ):
+    def __init__(self, a, b, c, color, reflectivity, transformation=None, an=None, bn=None, cn=None ):
         '''
         Constructor for the triangle class taking the three edge points a,b and c.
         '''
@@ -23,7 +23,20 @@ class Triangle(Shape):
         self.c = c.getArray3()
         self.color = color
         self.reflectivity = reflectivity
-        self.transformation = transformation
+        if transformation != None:
+            self.transformation = transformation
+        if an != None:
+            self.an = an
+        else:
+            self.an = np.cross((self.c -self.a), (self.b - self.a))
+        if bn != None:
+            self.bn = bn
+        else:
+            self.bn = np.cross((self.a - self.b), (self.c -self.b))
+        if cn != None:
+            self.cn = cn
+        else:
+            self.cn = np.cross((self.a - self.c), (self.b -self.c))
         
     def intersect(self, ray):
         '''
@@ -58,7 +71,8 @@ class Triangle(Shape):
                    and (0.0 <= x[0]+x[1]) and (x[0]+x[1] <= 1.0)):
                 hitPointArray = o + x[2]*d 
                 hitPoint = self.transformation.transformPoint( Point( npArray = hitPointArray ))
-                hitNormal = Normal(0.0,0.0,1.0) #fixme
+                hitNormalArray = (1 - x[0] - x[1])*self.an.getArray3() + x[0]*self.bn.getArray3() + x[1]*self.cn.getArray3()
+                hitNormal = self.transformation.transformNormal( Normal(npArray = hitNormalArray))
                 return Intersection(True,hitNormal,hitPoint)
             else:
                 return Intersection(False) 

@@ -5,8 +5,10 @@ Created on Feb 23, 2016
 '''
 from src.camera import PerspectiveCamera
 from src.lights import PointLight
+
 from src.shape import Triangle
 from src.shape import Sphere
+from src.shape import ObjShape
 
 from src.math import Transformation
 from src.math import Point
@@ -27,30 +29,18 @@ class TriangleWorld(object):
         self.ambient = ambient
         
         #xResolution, yResolution, origin, lookAt, up, s, d
-        self.camera = PerspectiveCamera(width, height, Point(0.0, 0.0, -5.0),
+        self.camera = PerspectiveCamera(width, height, Point(5.0, 5.0, -5.0),
                                    Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
                                    1.0/width, 1.0)
         
         #set up a point light (position, shadows, color, ls)
-        self.pointLight = PointLight(Point(2.0, 2.0, -4.0), False, Color(.8,.8,.8), 4.)
+        self.pointLight = PointLight(Point(0.0, 0.0, -4.0), False, Color(.8,.8,.8), 2.)
         
         self.shapes = []; 
-        # initialize the scene
-        trans = Transformation()
-        trans.rotateZ(180);
-        trans.scale(0.6, 0.6, 1.0);
-        trans.translation(.25,.25, 0.0)
-        triangle = Triangle(Point(1.,0.,0.),Point(0.,1.,0.),Point(), Color(0.,0.6,0.), 0.9,trans)
-        self.shapes.append(triangle)
         
-           
-        trans2 = Transformation(); 
-        trans2.rotateZ(180);
-        trans2.scale(0.6, 0.6, 1.0);
-        trans2.translation(0.2, 0.2, 0.)
-        triangle2 = Triangle(Point(1.,0.,0.),Point(0.,1.,0.),Point(),Color(0.,0.6,0.6), 0.9, trans2)
-        self.shapes.append(triangle2)
-        
+        trans3 = Transformation();
+        obj = ObjShape("../../obj/cube.obj",Color(0.0,0.6,0.0), 0.8, trans3)
+        self.shapes = obj.triangleList + self.shapes
 
         
         

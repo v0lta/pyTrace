@@ -4,7 +4,8 @@ Created on Feb 23, 2016
 @author: moritz
 '''
 from src.shape import Triangle
-from src.math import Point
+from src.math import Point, Transformation, Normal
+
 
 class ObjShape(object):
     '''
@@ -12,13 +13,15 @@ class ObjShape(object):
     '''
 
 
-    def __init__(self, path):
+    def __init__(self, path, color, reflectivity, transformation):
         '''
         Supply the path to the .obj file.
         '''
-        self.path = "./obj/plane.obj"
-        #read in the file
-        
+        self.path = path
+        self.color = color
+        self.reflectivity = reflectivity
+        self.transformation = transformation
+                
         self.vertices = []
         self.textCoords = []
         self.normals = []
@@ -27,20 +30,30 @@ class ObjShape(object):
         #read in the file.
         self.read()
         
-        #create a list of trinagles.
-        self.triangelList = []
-        for el in self.f:
+        #create a list of trindgles.
+        self.triangleList = []
+        for f in self.f:
             
-            ptListA = self.vertices[el[0][0] - 1]
+            ptListA = self.vertices[f[0][0] - 1]
             a = Point(ptListA[0], ptListA[1], ptListA[2])
             
-            ptListB = self.vertices[el[1][0] - 1]
+            ptListB = self.vertices[f[1][0] - 1]
             b = Point(ptListB[0], ptListB[1], ptListB[2])
             
-            ptListC = self.vertices[el[2][0] - 1]
+            ptListC = self.vertices[f[2][0] - 1]
             c = Point(ptListC[0], ptListC[1], ptListC[2])
+     
+            normListA = self.normals[f[0][2] - 1]
+            na = Normal(normListA[0], normListA[1], normListA[2])
+            
+            normListB = self.normals[f[1][2] - 1]
+            nb = Normal(normListB[0], normListB[1], normListB[2])
+            
+            normListC = self.normals[f[2][2] - 1]
+            nc = Normal(normListC[0], normListC[1], normListC[2])
 
-            self.triangelList.append(Triangle(a,b,c))
+            self.triangleList.append(Triangle(a,b,c, self.color, self.reflectivity, self.transformation,
+                                     na, nb, nc))
             
    
     def read(self):     
@@ -68,3 +81,4 @@ class ObjShape(object):
             print "vt:" + str(self.textCoords)
             print "vn:" + str(self.normals)
             print "f :" + str(self.f)
+            print "--------------------------"
