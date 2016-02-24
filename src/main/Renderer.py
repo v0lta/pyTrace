@@ -35,6 +35,7 @@ class Renderer:
         #create the image matrix
         img = np.zeros((self.width,self.height,3))
         
+        
         for x in range(0,self.width):
             print float(x)/self.width
             for y in range(0,self.height):
@@ -42,22 +43,43 @@ class Renderer:
                 currentRay = self.world.camera.generateRay(sample)
                 
                 #Using exhaustive ray Tracing
+                intersectionList = [];
+   
                 for currentShape in self.world.shapes:
+                    
                     intersection = currentShape.intersect(currentRay)
                     if intersection.hit == True:
-                        img[x,y,:] = (self.world.ambient*currentShape.color.getColor()*currentShape.reflectivity +
-                                     (currentShape.reflectivity/3.14 * currentShape.color.getColor()* 
-                                      self.world.pointLight.L()* self.world.pointLight.color.getColor() * 
-                                      np.dot(self.world.pointLight.l(intersection.point),
-                                              intersection.normal.getArray3() )))
+                        intersectionList.append(intersection)
+                
+                if intersectionList:       
+                    #Find the intersection closest to the camera. (There can only be one camera.)
+                    dists = []
+                    for currentIntersetion in intersectionList:
+                        camPos = self.world.pointLight.position.getArray3()
+                        intPos = currentIntersetion.point.getArray3()
+                        dist = np.linalg.norm(camPos - intPos) 
+                        dists.append(dist)
+                    index = dists.index(min(dists))
+                    intersection = intersectionList[index]
+                           
+                    #use the found intersection for rendering.
+                    La = self.world.ambient
+                    Rs = currentShape.reflectivity
+                    Cs = intersection.color.getColor()
+                    Lp = self.world.pointLight.L()
+                    Cp = self.world.pointLight.color.getColor()
+                    l  = self.world.pointLight.l(intersection.point)
+                    n  = intersection.normal.getArray3()
+                        
+                    img[x,y,:] = La*Cs*Rs + (Rs/3.14 * Cs* Lp* Cp * np.dot(l,n ))
 
                         
-                        #Fix overflow...
-                        for i in range(0,2):
-                            if img[x,y,i] > 1.0:
-                                #img[x,y,:] = img[x,y,:]/img[x,y,i]
-                                #img[x,y,:] = img[x,y,:]/5.0; 
-                                img[x,y,:] = [1.,0.,0.]
+                    #Fix overflow...
+                    for i in range(0,2):
+                        if img[x,y,i] > 1.0:
+                            #img[x,y,:] = img[x,y,:]/img[x,y,i]
+                            #img[x,y,:] = img[x,y,:]/5.0; 
+                            img[x,y,:] = [1.,0.,0.]
 
         
                 
@@ -66,6 +88,8 @@ class Renderer:
         #plt.show()
         plt.savefig("../../img.png")
         print "rend.main done"
+        
+        
         
     def multiRend(self):
         processNo = 4;

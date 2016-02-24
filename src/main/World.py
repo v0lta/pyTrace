@@ -29,18 +29,25 @@ class TriangleWorld(object):
         self.ambient = ambient
         
         #xResolution, yResolution, origin, lookAt, up, s, d
-        self.camera = PerspectiveCamera(width, height, Point(5.0, 5.0, -5.0),
+        self.camera = PerspectiveCamera(width, height, Point(-2.0, 2.0, -5.0),
                                    Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
                                    1.0/width, 1.0)
         
         #set up a point light (position, shadows, color, ls)
-        self.pointLight = PointLight(Point(0.0, 0.0, -4.0), False, Color(.8,.8,.8), 2.)
+        self.pointLight = PointLight(Point(0.0, 4.0, -0.5), False, Color(.8,.8,.8), 4.)
         
-        self.shapes = []; 
+        
+        # initialize the scene
+        self.shapes = [];    
+        #background plane
+        chessPattern = Chess(Color(0.1,0.1,0.1),Color(0.3,0.3,0.3),0.5)
+        p1 = Plane(Point(0.0,0.0,5.0),Normal(0.0,0.0,-1.0), chessPattern, 0.9)
+        self.shapes.append(p1)
+        
         
         trans3 = Transformation();
         obj = ObjShape("../../obj/cube.obj",Color(0.0,0.6,0.0), 0.8, trans3)
-        self.shapes = obj.triangleList + self.shapes
+        self.shapes = self.shapes + obj.triangleList 
 
         
         
