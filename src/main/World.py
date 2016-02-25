@@ -29,9 +29,13 @@ class TriangleWorld(object):
         self.ambient = ambient
         
         #set up the camera (xResolution, yResolution, origin, lookAt, up, s, d)
-        self.camera = PerspectiveCamera(width, height, Point(-2.0, 2.0, -5.0),
+        self.camera = PerspectiveCamera(width, height, Point(-4.0, 4.0, -5.0),
                                    Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
                                    1.0/width, 1.0)
+        #self.camera = PerspectiveCamera(width, height, Point(-8.0, 8.0, -6.0), #table camera
+        #                           Point(0.0, 0.0, 0.0), Point(0.0, 1.0, 0.0),
+        #                           1.0/width, 1.0)
+        
         
         #set up the lights (position, shadows, color, ls)
         self.pointLightLst = []
@@ -44,12 +48,13 @@ class TriangleWorld(object):
         self.shapes = [];    
         #background plane
         chessPattern = Chess(Color(0.1,0.1,0.1),Color(0.3,0.3,0.3),0.5)
-        p1 = Plane(Point(0.0,0.0,5.0),Normal(0.0,0.0,-1.0), chessPattern, 0.9)
+        p1 = Plane(Point(0.0,0.0,0.0),Normal(0.0,0.0,-1.0), chessPattern, 0.9)
         self.shapes.append(p1)
         
         
         trans3 = Transformation();
-        obj = ObjShape("../../obj/sphere.obj",Color(0.5,0.6,0.5), 0.8, trans3)
+        #trans3.rotateX(-85) #table rotation
+        obj = ObjShape("../../obj/cube.obj",Color(0.5,0.6,0.5), 0.8, trans3)
         self.shapes = self.shapes + obj.triangleList 
 
         

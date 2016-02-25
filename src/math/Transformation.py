@@ -4,6 +4,7 @@ Created on Feb 15, 20.016
 @author: moritz
 '''
 import numpy as np
+from src.math import Ray,Normal,Point
 
 class Transformation(object):
     '''
@@ -29,18 +30,18 @@ class Transformation(object):
     def transformInverse(self, ray):
         outOrigin = np.dot(self.inverse, ray.getOrigin4())
         outDirection = np.dot(self.inverse, ray.getDirection4())
-        ray.set(outOrigin, outDirection)
-        return ray
+        #ray.set(outOrigin, outDirection)
+        return Ray(outOrigin, outDirection)
     
     def transformNormal(self, normal):
         dataArray = np.dot(self.inverse.transpose(), normal.getArray4())
-        normal.set(dataArray)
-        return normal
+        #normal.set(dataArray)
+        return Point(npArray = dataArray)
         
     def transformPoint(self, point):    
         dataArray = np.dot(self.matrix, point.getArray4())
-        point.set(dataArray)
-        return point
+        #point.set(dataArray)
+        return Point( npArray = dataArray)
         
     def translation(self, x, y, z):
         '''

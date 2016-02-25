@@ -3,7 +3,7 @@ Created on Feb 12, 2016
 
 @author: moritz
 '''
-from src.math import Point
+import numpy as np
 
 class Ray(object):
     '''
@@ -14,7 +14,7 @@ class Ray(object):
         '''
         Sets the starting point or origin and the direction into which the ray moves.
         '''
-        if type(origin) == 'numpy.ndarray':
+        if type(origin).__module__ == np.__name__:
             self.origin = origin
             self.direction = direction
         else:

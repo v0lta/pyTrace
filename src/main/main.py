@@ -21,8 +21,8 @@ import profile
 print("Starting the ray-tracing process.")
 # (self,world,width,height,sens,gamma):
 
-#spWorld = SphereWorld(300,300,1.0)
-trWorld = TriangleWorld(100,100,0.4)
+#spWorld = SphereWorld(800,600,1.0)
+trWorld = TriangleWorld(800,600,0.4)
 print("world created.")
 rend1 = Renderer(1.0,1.0,trWorld)
 

@@ -142,14 +142,17 @@ def rendPart(args):
                     Cp = pl.color.getColor()
                     l  = pl.l(intersection.point)
                     n  = intersection.normal.getArray3()
-                    img[i,j,:] = img[i,j,:] + (Rs/3.14 * Cs* Lp* Cp * np.dot(l,n ))
+                    
+                    dot = np.dot(l,n )
+                    if dot > 0:                    
+                     	img[i,j,:] = img[i,j,:] + (Rs/3.14 * Cs* Lp* Cp * np.dot(l,n ))
 
                      
                 #Fix overflow...
                 for k in range(0,2):
              	   if img[i,j,k] > 1.0:
-                   		#img[x,y,:] = img[x,y,:]/img[x,y,i]
-                   		#img[x,y,:] = img[x,y,:]/5.0; 
-                   		img[x,y,:] = [1.,0.,0.]
+                   		img[i,j,:] = img[i,j,:]/img[i,j,k]
+                   		#img[i,j,:] = img[i,j,:]/5.0; 
+                   		#img[i,j,:] = [1.,0.,0.]
                   
     return img
