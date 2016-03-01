@@ -3,8 +3,12 @@ Created on Feb 23, 2016
 
 @author: moritz
 '''
+
+from src.math import Point, Normal
 from src.shape import Triangle
-from src.math import Point, Transformation, Normal
+
+import pyximport; pyximport.install();
+from src.shape.CTriangle import CTriangle
 
 
 class ObjShape(object):

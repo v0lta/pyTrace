@@ -12,7 +12,7 @@ from src.math import Normal
 
 
 class Renderer:
-    def __init__(self,sens,gamma,world):
+    def __init__(self,sens,gamma,world,path):
         
         # validate the input 
         if (world.width <= 0):
@@ -29,6 +29,7 @@ class Renderer:
         self.sensitivity = sens
         self.gamma       = gamma
         self.world       = world
+        self.path        = path
 
 
     def main(self):    
@@ -85,8 +86,8 @@ class Renderer:
         imgplot = plt.imshow(img)
         plt.gca().invert_yaxis()
         #plt.show()
-        plt.savefig("../../img2.png")
-        print "rend.multiRand done"
+        plt.savefig(self.path)
+        print "multiRend done " + " saved to " + self.path
         
    
 def rendPart(args):

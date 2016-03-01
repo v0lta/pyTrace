@@ -56,7 +56,7 @@ class TriangleWorld(object):
         #trans3.rotateX(-85) #table rotation
         obj = ObjShape("../../obj/cube.obj",Color(0.5,0.6,0.5), 0.8, trans3)
         self.shapes = self.shapes + obj.triangleList 
-
+        #"../../obj/cube.obj"
         
         
         
@@ -100,10 +100,38 @@ class SphereWorld:
         trans.scale(0.75, 0.75, 0.75)                       
         sphere = Sphere(Color(0.,0.6,0.6), 0.9, trans ); #red sphere at the origin.
         self.shapes.append(sphere)
+             
+        
+class TestWorld:
+    def __init__(self,width,height,ambient):
+        '''
+        Set up a scene with a transformed sphere.
+        '''
+        self.width  = width
+        self.height = height
+        self.ambient = ambient
+        
+        #xResolution, yResolution, origin, lookAt, up, s, d
+        self.camera = PerspectiveCamera(width, height, Point(0.0, 0.0, 0.0),
+                                   Point(0.0, 0.0, 10.0), Point(0.0, 1.0, 0.0),
+                                   1.0/width, 1.0)
+        
+        #set up the lights (position, shadows, color, ls)
+        self.pointLightLst = []
+        pointLight1 = PointLight(Point(1.0, 1.0, 0.5), False, Color(.8,.8,.8), 4.)
+        self.pointLightLst.append(pointLight1)
         
         
+        # initialize the scene
+        self.shapes = [];    
+        #background plane
+        #chessPattern = Chess(Color(0.1,0.1,0.1),Color(0.3,0.3,0.3),0.5)
+        #p1 = Plane(Point(0.0,0.0,20.0),Normal(0.0,0.0,-1.0), chessPattern, 0.9)
+        #self.shapes.append(p1)
         
-        
+        trans = Transformation()
+        obj = ObjShape("../../obj/torus.obj",Color(0.5,0.6,0.5), 0.8, trans)
+        self.shapes = self.shapes + obj.triangleList 
         
         
         

@@ -10,22 +10,26 @@ class Normal(object):
     A class for normal data encapsulation.
     '''
 
-    def __init__(self, a=None,b=None,c=None,npArray=None):
+    def __init__(self,x=None,y=None,z=None, npArray=None):
         '''
-        Initialize the normal.
+        Constructor initializing the x,y and z coordinate.
         '''
-        if npArray != None:
-            self.npArray = npArray
+         
+        if (npArray == None): 
+            if (x == None) and (y == None) and (z == None):
+                self.npArray = np.array([0., 0., 0., 1.])
+            else:
+                self.npArray = np.array([x,y,z, 1.])
         else:
-            self.npArray = np.array([a,b,c])
-        
-        #normalize
-        self.npArray = self.npArray/np.linalg.norm(self.npArray)
-       
+            if len(npArray) == 4:
+                self.npArray = npArray
+            else:
+                self.npArray = np.array([npArray[0], npArray[1], npArray[2], 1.0])
+                
     def set(self,npArray):
-        self.npArray = npArray   
-        
+                self.npArray = npArray
+                
+    def getArray4(self):
+        return self.npArray
     def getArray3(self):
         return self.npArray[0:3]
-    def getArray4(self):
-        return np.array([self.npArray[0], self.npArray[1], self.npArray[2], 1.0])
